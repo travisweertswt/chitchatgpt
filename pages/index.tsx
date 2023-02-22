@@ -104,7 +104,7 @@ const Home = () => {
         <>
         <img src="https://www.kitkat.com.au/media/logo/stores/1/kitkat-new-logo.png" width="250" />
         <h1>Take a Break...</h1>
-        <div>How about you send your special person a note to remind them how much you love them?<br />We'll even write it for you.</div>
+        <div>How about you send your special person a note to remind them how much you love them?<br />We&apos;ll even write it for you.</div>
         <br />
         <br />
         <div>

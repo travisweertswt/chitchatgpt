@@ -33,7 +33,7 @@ const Home = () => {
 
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: "In the super funny comedy style of Ryan Reynolds, write an insanely funny love letter for my loved one named " + input + " to let them know I bought them a KitKit bar and I'll give it to them when I see them. Sign the letter " + yourName + ".",
+      prompt: "In the super funny comedy style of Ryan Reynolds, write an insanely funny love letter for my loved one named " + input + " to let them know I bought them a KitKit bar and Ill give it to them when I see them. Sign the letter " + yourName + ".",
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,

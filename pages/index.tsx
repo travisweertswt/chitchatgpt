@@ -91,7 +91,7 @@ const Home = () => {
       )}
       {!loading && output && output.length > 0 && (
         <>
-        <h3>HERE'S YOUR LOVE LETTER:</h3>
+        <h3>HERE&apos;S YOUR LOVE LETTER:</h3>
         <pre>{output}</pre>
         <button onClick={handleCopyClick}>Copy</button>
         <button onClick={handleBackClick}>Try Again</button>

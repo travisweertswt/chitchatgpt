@@ -70,6 +70,8 @@ const Home = () => {
     setLoading(true);
     getResponse(input, yourName);
   }
+  // input change
+  
 
   const handleInputChange = (e: any) => {
     setInput(e.target.value);

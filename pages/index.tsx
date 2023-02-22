@@ -71,7 +71,7 @@ const Home = () => {
     getResponse(input, yourName);
   }
   // input change
-  
+
 
   const handleInputChange = (e: any) => {
     setInput(e.target.value);
@@ -94,7 +94,7 @@ const Home = () => {
       {!loading && output && output.length > 0 && (
         <>
         <h3>HERE&apos;S YOUR LOVE LETTER:</h3>
-        <pre>{output}</pre>
+        <div>{output}</div>
         <button onClick={handleCopyClick}>Copy</button>
         <button onClick={handleBackClick}>Try Again</button>
         </>

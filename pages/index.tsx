@@ -41,7 +41,11 @@ const Home = () => {
       presence_penalty: 0,
     });
 
-    setOutput(response.data.choices[0].text || "");
+    let outputFormatted = response.data.choices[0].text || "";
+
+    outputFormatted = outputFormatted.replace("\n", "<br />");
+    
+    setOutput(outputFormatted);
 
     console.log(response.data.choices[0].text);
     setLoading(false);
@@ -95,8 +99,11 @@ const Home = () => {
         <>
         <h3>HERE&apos;S YOUR LOVE LETTER:</h3>
         <div>{output}</div>
-        <button onClick={handleCopyClick}>Copy</button>
-        <button onClick={handleBackClick}>Try Again</button>
+        <div className="doneButtons">
+          <button onClick={handleCopyClick}>Copy</button>
+          <button onClick={handleBackClick}>Try Again</button>
+        </div>
+       
         </>
       )}
 

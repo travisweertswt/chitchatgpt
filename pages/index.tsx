@@ -43,8 +43,8 @@ const Home = () => {
 
     let outputFormatted = response.data.choices[0].text || "";
 
-    outputFormatted = outputFormatted.replace("\n", "<br />");
-    
+    // outputFormatted = outputFormatted.replace("\n", "<br />");
+
     setOutput(outputFormatted);
 
     console.log(response.data.choices[0].text);

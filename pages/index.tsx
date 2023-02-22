@@ -41,7 +41,7 @@ const Home = () => {
       presence_penalty: 0,
     });
 
-    setOutput(response.data.choices[0].text);
+    setOutput(response.data.choices[0].text || "");
 
     console.log(response.data.choices[0].text);
     setLoading(false);

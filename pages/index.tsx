@@ -97,7 +97,7 @@ const Home = () => {
       )}
       {!loading && output && output.length > 0 && (
         <>
-        <h3>HERE&apos;S YOUR LOVE LETTER:</h3>
+        <h3>NOW... COPY AND SEND THIS TO {input}:</h3>
         <div>{output}</div>
         <div className="doneButtons">
           <button onClick={handleCopyClick}>Copy</button>

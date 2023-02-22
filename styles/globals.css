@@ -157,7 +157,7 @@ pre
   margin: 40px 0;
 }
 
-.doneButtons
+.doneButtons, h3
 {
   margin-top: 30px;
 }

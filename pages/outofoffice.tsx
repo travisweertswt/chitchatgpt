@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
+import Link from "next/link";
 
 // import NaturalLanguageUnderstandingV1 from "ibm-watson/natural-language-understanding/v1";
 // import { IamAuthenticator } from "ibm-watson/auth";
@@ -188,7 +189,7 @@ const OutOfOffice = () => {
     <div>
       {loading && (
         <>
-          <img src="/loading.gif" height="200" />
+          <img className="loader" src="/loading.gif" height="100" />
         </>
       )}
       {!loading && output && output.length > 0 && (
@@ -209,7 +210,9 @@ const OutOfOffice = () => {
           <div className="doneButtons">
             {!badVibes && <button onClick={handleCopyClick}>Copy</button>}
 
-            <button onClick={handleBackClick}>Try Again</button>
+            <button onClick={handleBackClick} className="back">
+              Back
+            </button>
           </div>
         </>
       )}
@@ -257,6 +260,10 @@ const OutOfOffice = () => {
 
           <br />
           <button onClick={handleButtonClick}>Generate</button>
+
+          <Link href="/">
+            <button className="back">Back</button>
+          </Link>
         </>
       )}
     </div>

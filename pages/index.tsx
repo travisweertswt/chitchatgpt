@@ -60,7 +60,7 @@ const Home = () => {
       <div className="poweredby">
         <p>
           Powered by{" "}
-          <a href="https://openai.com" target="_blank">
+          <a href="https://openai.com" target="_blank" rel="noreferrer">
             OpenAI
           </a>
         </p>

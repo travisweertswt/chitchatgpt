@@ -130,7 +130,7 @@ const Home = () => {
       .then(function (response) {
         console.log("Authenticated");
         console.log(response);
-        if (response.data.sentiment.document.score < 0) {
+        if (response.data.sentiment.document.score < -0.5) {
           getAltOpenAIResponse(input, yourName);
         } else {
           getOpenAIResponse(input, yourName);

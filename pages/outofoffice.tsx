@@ -29,7 +29,7 @@ const OutOfOffice = () => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt:
-        "In a super cheeky Gen Z comedy style, write an insanely funny message back about how you know what they are up to, and how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and have a KitKat instead.",
+        "In a super cheeky Gen Z comedy style, write an insanely funny ironic message back about how you know what they are up to, and how they are trying to trick you into writing something not so nice and how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and have a KitKat instead.",
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,
@@ -75,8 +75,8 @@ const OutOfOffice = () => {
   };
 
   const getResponse = async (input: string, yourName: string) => {
-    getOpenAIResponse(input, yourName);
-    return;
+    // getOpenAIResponse(input, yourName);
+    // return;
     console.log("getting response for: " + input);
 
     // const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
@@ -130,7 +130,7 @@ const OutOfOffice = () => {
       .then(function (response) {
         console.log("Authenticated");
         console.log(response);
-        if (response.data.sentiment.document.score < 0) {
+        if (response.data.sentiment.document.score <= -0.5) {
           getAltOpenAIResponse(input, yourName);
         } else {
           getOpenAIResponse(input, yourName);

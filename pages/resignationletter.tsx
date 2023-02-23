@@ -75,8 +75,8 @@ const ResignationLetter = () => {
   };
 
   const getResponse = async (input: string, yourName: string) => {
-    getOpenAIResponse(input, yourName);
-    return;
+    // getOpenAIResponse(input, yourName);
+    // return;
     console.log("getting response for: " + input);
 
     // const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
@@ -130,7 +130,7 @@ const ResignationLetter = () => {
       .then(function (response) {
         console.log("Authenticated");
         console.log(response);
-        if (response.data.sentiment.document.score < 0) {
+        if (response.data.sentiment.document.score < -0.5) {
           getAltOpenAIResponse(input, yourName);
         } else {
           getOpenAIResponse(input, yourName);

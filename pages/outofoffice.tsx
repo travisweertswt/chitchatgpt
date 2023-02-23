@@ -11,7 +11,7 @@ import axios from "axios";
 //const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1");
 // const { IamAuthenticator } = require("ibm-watson/auth");
 
-const Home = () => {
+const OutOfOffice = () => {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,13 +52,12 @@ const Home = () => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt:
-        "In the super funny comedy style of Ryan Reynolds, write an insanely funny love letter for my " +
+        "In the super funny comedy Gen Z style, write an insanely funny and ironic out of office message for a " +
         relationship +
-        " named " +
+        '. Include that i am taking some "Me time" and include something ironic about eating KitKats. I will be returning in ' +
         input +
-        " to let them know I bought them a KitKit bar. Sign the letter " +
-        yourName +
-        ". Make sure the letter is written in a Gen Z style.",
+        ". Make sure the out of office is written in a Gen Z style and sign it " +
+        yourName,
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,
@@ -77,6 +76,8 @@ const Home = () => {
   };
 
   const getResponse = async (input: string, yourName: string) => {
+    getOpenAIResponse(input, yourName);
+    return;
     console.log("getting response for: " + input);
 
     // const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
@@ -197,7 +198,13 @@ const Home = () => {
             <h3>HMMM... KINDA GETTING BAD VIBES ABOUT THAT ONE...</h3>
           )}
 
-          {!badVibes && <h3>NOW... COPY AND SEND THIS TO {input}:</h3>}
+          {!badVibes && (
+            <h3>
+              NOW...
+              <br />
+              COPY &amp; PASTE THIS IN YOUR OUT OF OFFICE
+            </h3>
+          )}
 
           <div>{output}</div>
           <div className="doneButtons">
@@ -216,24 +223,23 @@ const Home = () => {
           />
           <h1>Need a break?</h1>
           <div>
-            How about you send your special person a note to remind them how
-            much you love them?
+            How about you get out of the office for a bit?
             <br />
-            We&apos;ll even write it for you.
+            We&apos;ll write the perfect OOF for you ;)
           </div>
           <br />
           <br />
           <div>
-            <label>Dear </label>
+            <label>When do you return?</label>
             <input
               type="text"
               value={input}
               onChange={handleInputChange}
-              placeholder="Loved One's name"
+              placeholder="An hour? a week? month? never?"
             />
           </div>
           <div>
-            <label>Love </label>
+            <label>Your Name </label>
             <input
               type="text"
               value={yourName}
@@ -242,14 +248,11 @@ const Home = () => {
             />
           </div>
           <div>
-            <label>Relationship </label>
+            <label>Gender </label>
             <select onChange={handleRelationshipChange} value={relationship}>
-              <option>Girlfriend</option>
-              <option>Boyfriend</option>
-              <option>Daughter</option>
-              <option>Son</option>
-              <option>Mom</option>
-              <option>Dad</option>
+              <option>Man</option>
+              <option>Woman</option>
+              <option>Other</option>
             </select>
           </div>
 
@@ -261,4 +264,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default OutOfOffice;

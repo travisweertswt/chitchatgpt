@@ -52,9 +52,8 @@ const OutOfOffice = () => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt:
-        "In the super funny comedy Gen Z style, write an insanely funny and ironic out of office message for a " +
-        relationship +
-        '. Include that i am taking some "Me time" and include something ironic about eating KitKats. I will be returning in ' +
+        "In the super funny comedy Gen Z style, write an insanely funny and ironic out of office message." +
+        'Include that i am taking some "Me time" and include something ironic about eating KitKats. I will be returning in ' +
         input +
         ". Make sure the out of office is written in a Gen Z style and sign it " +
         yourName,
@@ -247,14 +246,14 @@ const OutOfOffice = () => {
               placeholder="Your name"
             />
           </div>
-          <div>
+          {/* <div>
             <label>Gender </label>
             <select onChange={handleRelationshipChange} value={relationship}>
               <option>Male</option>
               <option>Female</option>
               <option>Other</option>
             </select>
-          </div>
+          </div> */}
 
           <br />
           <button onClick={handleButtonClick}>Generate</button>

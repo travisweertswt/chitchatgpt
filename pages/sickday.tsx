@@ -223,8 +223,7 @@ const SickDay = () => {
           <div>
             How about chucking a sicky?
             <br />
-            Don&apos;t worry, we&apos;ll write the message you can text your
-            boss for you ;)
+            Great Idea! Let&apos;s write a note for your boss now!
           </div>
           <br />
           <br />

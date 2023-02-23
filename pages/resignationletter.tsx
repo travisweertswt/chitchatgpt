@@ -199,9 +199,9 @@ const ResignationLetter = () => {
 
           {!badVibes && (
             <h3>
-              ALL YOU GOTTA DO NOW...
+              ALL YOU GOTTA DO NOW IS...
               <br />
-              IS SEND IT.
+              SEND IT.
             </h3>
           )}
 

@@ -11,7 +11,7 @@ import axios from "axios";
 //const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1");
 // const { IamAuthenticator } = require("ibm-watson/auth");
 
-const SickDay = () => {
+const Excuse = () => {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -52,10 +52,16 @@ const SickDay = () => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt:
-        "In the super funny comedy Gen Z style, write an insanely funny and ironic message I can send my boss to say I won't be coming into work today because I woke up this morning and wasn't feeling well. " +
-        ". Make sure the message is written in a Gen Z style and start it off by saying good morning, it's me " +
+        "In the super funny comedy Gen Z style, write an insanely funny and ironic message I can send my colleague, named " +
+        input +
+        " with a hilariously brilliant excuse for why I didnt finish that thing (" +
         yourName +
-        " also make sure to include some ironic joke about work",
+        ") they asked me to do " +
+        ". Make sure the message is written in a Gen Z style. " +
+        " Also make sure to include some ironic joke about being late on work." +
+        "Also start by saying hi " +
+        input +
+        ". And don't sign the end of the message.",
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,
@@ -198,9 +204,9 @@ const SickDay = () => {
 
           {!badVibes && (
             <h3>
-              NOW TEXT THIS TO YOUR BOSS...
+              HERE YOU GO. THIS OUGHTA
               <br />
-              YOU GOT THIS.
+              DO THE TRICK.
             </h3>
           )}
 
@@ -221,29 +227,29 @@ const SickDay = () => {
           />
           <h1>Need a break?</h1>
           <div>
-            How about chucking a sicky?
+            We get it. Some things are just too hard. Need a quick excuse?
             <br />
-            Don&apos;t worry, we&apos;ll write the message you can text your
-            boss for you ;)
+            Try out our excuse maker upper. It works for anything anyone asks
+            you to do.
           </div>
           <br />
           <br />
-          {/* <div>
-            <label>When do you return?</label>
+          <div>
+            <label>WHO</label>
             <input
               type="text"
               value={input}
               onChange={handleInputChange}
-              placeholder="An hour? a week? month? never?"
+              placeholder="Your colleague's name"
             />
-          </div> */}
+          </div>
           <div>
-            <label>Your Name </label>
+            <label>TASK </label>
             <input
               type="text"
               value={yourName}
               onChange={handleYourNameChange}
-              placeholder="Your name"
+              placeholder="What did they ask you to do?"
             />
           </div>
           {/* <div>
@@ -263,4 +269,4 @@ const SickDay = () => {
   );
 };
 
-export default SickDay;
+export default Excuse;

@@ -27,7 +27,7 @@ const Home = () => {
           width="250"
         />
         <h1>Need a break?</h1>
-        <div>Try out some of our break maker AI tools.</div>
+        <div>You deserve it. Here&apos;s some AI tools we created to help.</div>
         <br />
         <br />
         <Link href="/outofoffice">

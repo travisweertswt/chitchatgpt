@@ -217,10 +217,10 @@ const Home = () => {
             src="https://www.kitkat.com.au/media/logo/stores/1/kitkat-new-logo.png"
             width="250"
           />
-          <h1>Need a break?</h1>
+          <h1>Need a love note?</h1>
           <div>
-            How about you send your special person a note to remind them how
-            much you love them?
+            How about you send your special person a quick note to remind them
+            how much you love them?
             <br />
             We&apos;ll even write it for you.
           </div>

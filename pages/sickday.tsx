@@ -222,11 +222,11 @@ const SickDay = () => {
             src="https://www.kitkat.com.au/media/logo/stores/1/kitkat-new-logo.png"
             width="250"
           />
-          <h1>Need a break?</h1>
+          <h1>Can&apos;t be f&apos;d?</h1>
           <div>
-            How about chucking a sicky?
+            How about chuckin&apos; a sicky?
             <br />
-            Great Idea! Let&apos;s write a note for your boss now!
+            Great Idea! Let&apos;s write a sick note for your boss now!
           </div>
           <br />
           <br />

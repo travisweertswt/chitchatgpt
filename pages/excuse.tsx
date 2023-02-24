@@ -228,9 +228,9 @@ const Excuse = () => {
             src="https://www.kitkat.com.au/media/logo/stores/1/kitkat-new-logo.png"
             width="250"
           />
-          <h1>Need a break?</h1>
+          <h1>Need an excuse?</h1>
           <div>
-            We get it. Some things are just too hard. Need a quick excuse?
+            We get it. Some things are just hard.
             <br />
             Try out our excuse maker upper. It works for anything anyone asks
             you to do.

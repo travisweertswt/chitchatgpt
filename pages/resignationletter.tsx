@@ -223,7 +223,7 @@ const ResignationLetter = () => {
             src="https://www.kitkat.com.au/media/logo/stores/1/kitkat-new-logo.png"
             width="250"
           />
-          <h1>Need a break?</h1>
+          <h1>Need a new life?</h1>
           <div>
             Hate your job? Just quit. It&apos;s that easy.
             <br />

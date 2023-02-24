@@ -223,7 +223,7 @@ const OutOfOffice = () => {
             src="https://www.kitkat.com.au/media/logo/stores/1/kitkat-new-logo.png"
             width="250"
           />
-          <h1>Need a break?</h1>
+          <h1>Need some me time?</h1>
           <div>
             How about you get out of the office for a bit?
             <br />

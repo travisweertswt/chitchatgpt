@@ -54,8 +54,8 @@ const CoverLetter = () => {
         input2 +
         ". Include in the cover letter that I have " +
         input3 +
-        " years of experience. Please sign the cover letter with my name, " +
-        input3,
+        " years of experience. You must remember to keep it very funny and Gen Z. Please sign the cover letter with my name, " +
+        input,
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,

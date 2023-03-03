@@ -6,7 +6,7 @@ import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import Link from "next/link";
 
-const CoverLetter = () => {
+const SelfAppraisal = () => {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,11 +21,15 @@ const CoverLetter = () => {
   });
   const openai = new OpenAIApi(configuration);
 
-  const getAltOpenAIResponse = async (input: string, yourName: string) => {
+  const getNoNegativityResponse = async (
+    input: string,
+    input2: string,
+    input3: string
+  ) => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt:
-        "In a super cheeky Gen Z comedy style, write an insanely funny message back about how you know what they are up to, and how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and have a KitKat instead.",
+        "In a super cheeky Gen Z comedy style, write an positive upbeat response to the user about how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and look on the bright side instead.",
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,
@@ -33,7 +37,7 @@ const CoverLetter = () => {
       presence_penalty: 0,
     });
 
-    let outputFormatted = response.data.choices[0].text || "";
+    let outputFormatted = response?.data?.choices[0].text || "";
 
     setOutput(outputFormatted);
 
@@ -42,69 +46,77 @@ const CoverLetter = () => {
     setLoading(false);
   };
 
-  const getOpenAIResponse = async (
+  const getChatGPTResponse = async (
     input: string,
     input2: string,
     input3: string
   ) => {
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt:
-        "In the super funny comedy Gen Z style, write an insanely funny and ironic self assessment for my role of " +
-        input3 +
-        " at my company " +
-        input2 +
-        ". Please sign the self appraisal with my name, " +
-        input,
-      temperature: 0.7,
-      max_tokens: 1055,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+    const prompt = `In the super funny comedy Gen Z style, write an insanely funny and ironic self assessment for my role of ${input3} at my company ${input2}. Please sign the self appraisal with my name, ${input}`;
+
+    let response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
     });
 
-    let outputFormatted = response.data.choices[0].text || "";
-
-    setOutput(outputFormatted);
-
-    console.log(response.data.choices[0].text);
+    const outputFormatted = response?.data?.choices[0].message?.content || "";
+    setOutput(outputFormatted.replace(/(?:\r\n|\r|\n)/g, "<br>"));
     setLoading(false);
   };
 
-  const getResponse = async (input: string, input2: string, input3: string) => {
-    console.log("getting response for: " + input);
+  const checkForBadVibes = async (
+    input: string,
+    input2: string,
+    input3: string
+  ) => {
+    const textInput = `"${input}" "${input2}" "${input3}" "${input} ${input2} ${input3}"`;
 
-    const textInput = "From: " + input + " To: " + input2 + " " + input3;
-    const analyzeParams = {
-      text: textInput.repeat(3),
-      features: {
-        sentiment: {},
-      },
-    };
+    console.log("getting response for: " + textInput);
 
-    await axios
-      .post(
-        "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/0a56f75e-dbae-4b48-ae8b-24964b65ac89/v1/analyze?version=2022-04-07",
-        analyzeParams,
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
         {
-          auth: {
-            username: "apikey",
-            password: "e5AVUgDFcpVm4bHGharvKxwz96kE6ndUFAmhSR43AmkQ",
-          },
+          role: "user",
+          content:
+            "responding only with a percentage value and nothing else and no explanation, how controversial are these words: " +
+            textInput,
+        },
+      ],
+    });
+    const completionText = completion?.data?.choices[0].message?.content || "";
+
+    if (completionText) {
+      const nums = completionText.match(/\d+/g);
+      const nums2 = nums && nums.length > 0 ? nums : [];
+      const reallyNumbers = nums2.map(Number);
+
+      console.log(
+        "BAD VIBES CHECK: " + textInput,
+        completionText,
+        reallyNumbers
+      );
+
+      let detected = false;
+      for (let x = 0; x < reallyNumbers.length; x++) {
+        if (reallyNumbers[x] > 60) {
+          detected = true;
+          break;
         }
-      )
-      .then(function (response) {
-        console.log("Authenticated");
-        console.log(response);
-        if (response.data.sentiment.document.score < -0.5) {
-          getAltOpenAIResponse(input, input2);
-        } else {
-          getOpenAIResponse(input, input2, input3);
-        }
-      })
-      .catch(function (error) {
-        console.log("Error on Authentication");
-      });
+      }
+
+      console.log("Detected bad vides", detected);
+
+      if (detected) {
+        getNoNegativityResponse(input, input2, input3);
+      } else {
+        getChatGPTResponse(input, input2, input3);
+      }
+    }
   };
 
   useEffect(() => {}, [input]);
@@ -125,7 +137,7 @@ const CoverLetter = () => {
   const handleButtonClick = (e: any) => {
     setLoading(true);
     setBadVibes(false);
-    getResponse(input, input2, input3);
+    checkForBadVibes(input, input2, input3);
   };
 
   const handleRelationshipChange = (e: any) => {
@@ -234,4 +246,4 @@ const CoverLetter = () => {
   );
 };
 
-export default CoverLetter;
+export default SelfAppraisal;

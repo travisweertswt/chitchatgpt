@@ -94,10 +94,12 @@ const CoverLetter = () => {
         },
       ],
     });
-    let completionText = completion?.data?.choices[0].message?.content || "";
-    completionText = !completionText ? "" : completionText;
+    const completionText = completion?.data?.choices[0].message?.content || "";
+
     if (completionText) {
-      var reallyNumbers = completionText.match(/\d+/g).map(Number);
+      const nums = completionText.match(/\d+/g);
+      const nums2 = nums && nums.length > 0 ? nums : [];
+      const reallyNumbers = nums2.map(Number);
 
       console.log(
         "BAD VIBES CHECK: " + textInput,

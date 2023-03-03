@@ -221,7 +221,7 @@ const CoverLetter = () => {
               type="text"
               value={input2}
               onChange={handleInput2Change}
-              placeholder="Position applied for"
+              placeholder="Your Dream Job"
             />
           </div>
 

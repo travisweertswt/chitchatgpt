@@ -205,10 +205,9 @@ const CoverLetter = () => {
           <h1>Need an Cover Letter?</h1>
 
           <div>
-            We get it. Some things are just hard.
+            No problem.
             <br />
-            Try out our CoverLetter maker upper. It works for anything anyone
-            asks you to do.
+            Pop in your details and we&apos;ll write the perfect cover letter.
           </div>
           <br />
           <br />

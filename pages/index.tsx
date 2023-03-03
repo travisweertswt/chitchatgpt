@@ -35,6 +35,19 @@ const Home = () => {
             Out of Office
           </div>
         </Link>
+
+        <Link href="/coverletter">
+          <div className="linky" title="Cover Letter">
+            Cover Letter
+          </div>
+        </Link>
+
+        <Link href="/selfappraisal">
+          <div className="linky" title="Self Appraisal">
+            Self Appraisal
+          </div>
+        </Link>
+
         <Link href="/excuse">
           <div className="linky" title="Excuse Maker">
             Excuse Maker

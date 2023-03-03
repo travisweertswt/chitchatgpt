@@ -75,7 +75,7 @@ const SelfAppraisal = () => {
     input2: string,
     input3: string
   ) => {
-    const textInput = `"${input}" "${input2}" "${input3}" "${input} ${input2} ${input3}"`;
+    const textInput = `"${input}" "${input2}" "${input3}"`;
 
     console.log("getting response for: " + textInput);
 

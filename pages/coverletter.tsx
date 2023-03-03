@@ -96,28 +96,30 @@ const CoverLetter = () => {
     });
     let completionText = completion?.data?.choices[0].message?.content || "";
     completionText = !completionText ? "" : completionText;
-    var reallyNumbers = completionText.match(/\d+/g).map(Number);
+    if (completionText) {
+      var reallyNumbers = completionText.match(/\d+/g).map(Number);
 
-    console.log(
-      "BAD VIBES CHECK: " + textInput,
-      completion.data.choices[0].message.content,
-      reallyNumbers
-    );
+      console.log(
+        "BAD VIBES CHECK: " + textInput,
+        completion.data.choices[0].message.content,
+        reallyNumbers
+      );
 
-    let detected = false;
-    for (let x = 0; x < reallyNumbers.length; x++) {
-      if (reallyNumbers[x] > 60) {
-        detected = true;
-        break;
+      let detected = false;
+      for (let x = 0; x < reallyNumbers.length; x++) {
+        if (reallyNumbers[x] > 60) {
+          detected = true;
+          break;
+        }
       }
-    }
 
-    console.log("Detected bad vides", detected);
+      console.log("Detected bad vides", detected);
 
-    if (detected) {
-      getNoNegativityResponse(input, input2, input3);
-    } else {
-      getChatGPTResponse(input, input2, input3);
+      if (detected) {
+        getNoNegativityResponse(input, input2, input3);
+      } else {
+        getChatGPTResponse(input, input2, input3);
+      }
     }
   };
 

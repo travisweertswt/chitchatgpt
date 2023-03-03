@@ -6,19 +6,14 @@ import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 import Link from "next/link";
 
-// import NaturalLanguageUnderstandingV1 from "ibm-watson/natural-language-understanding/v1";
-// import { IamAuthenticator } from "ibm-watson/auth";
-
-//const NaturalLanguageUnderstandingV1 = require("ibm-watson/natural-language-understanding/v1");
-// const { IamAuthenticator } = require("ibm-watson/auth");
-
-const Excuse = () => {
+const CoverLetter = () => {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [relationship, setRelationship] = useState("");
   const [badVibes, setBadVibes] = useState(false);
-  const [yourName, setYourName] = useState("");
+  const [input2, setInput2] = useState("");
+  const [input3, setInput3] = useState("");
   const [output, setOutput] = useState("");
 
   const configuration = new Configuration({
@@ -26,11 +21,15 @@ const Excuse = () => {
   });
   const openai = new OpenAIApi(configuration);
 
-  const getAltOpenAIResponse = async (input: string, yourName: string) => {
+  const getNoNegativityResponse = async (
+    input: string,
+    input2: string,
+    input3: string
+  ) => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt:
-        "In a super cheeky Gen Z comedy style, write an insanely funny message back about how you know what they are up to, and how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and have a KitKat instead.",
+        "In a super cheeky Gen Z comedy style, write an positive upbeat response to the user about how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and look on the bright side instead.",
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,
@@ -38,9 +37,7 @@ const Excuse = () => {
       presence_penalty: 0,
     });
 
-    let outputFormatted = response.data.choices[0].text || "";
-
-    // outputFormatted = outputFormatted.replace("\n", "<br />");
+    let outputFormatted = response?.data?.choices[0].text || "";
 
     setOutput(outputFormatted);
 
@@ -49,111 +46,78 @@ const Excuse = () => {
     setLoading(false);
   };
 
-  const getOpenAIResponse = async (input: string, yourName: string) => {
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt:
-        "In the super funny comedy Gen Z style, write an insanely funny and ironic message I can send my colleague, named " +
-        input +
-        " with a hilariously brilliant excuse for why I didnt finish that thing (" +
-        yourName +
-        ") they asked me to do " +
-        ". Make sure the message is written in a Gen Z style. " +
-        " Also make sure to include some ironic joke about being late on work." +
-        "Also start by saying hi " +
-        input +
-        ". And don't sign the end of the message.",
-      temperature: 0.7,
-      max_tokens: 1055,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+  const getChatGPTResponse = async (
+    input: string,
+    input2: string,
+    input3: string
+  ) => {
+    const prompt = `In a super funny comedy Gen Z style, write an insanely funny and ironic message I can send my colleague, named ${input} with a hilariously brilliant excuse for why I didnt finish that thing (${input2}) they asked me to do. Let them know i'll have it finished by ${input3}. Make sure the message is written in a Gen Z style with lots of jokes about being late. Also make sure to include some ironic joke about being late on work. Also start by saying hi ${input}. And don't sign the end of the message.`;
+
+    let response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
     });
 
-    let outputFormatted = response.data.choices[0].text || "";
-
-    // outputFormatted = outputFormatted.replace("\n", "<br />");
-
-    setOutput(outputFormatted);
-
-    console.log(response.data.choices[0].text);
+    const outputFormatted = response?.data?.choices[0].message?.content || "";
+    setOutput(outputFormatted.replace(/(?:\r\n|\r|\n)/g, "<br>"));
     setLoading(false);
   };
 
-  const getResponse = async (input: string, yourName: string) => {
-    // getOpenAIResponse(input, yourName);
-    // return;
-    console.log("getting response for: " + input);
+  const checkForBadVibes = async (
+    input: string,
+    input2: string,
+    input3: string
+  ) => {
+    // const textInput = `"${input}" "${input2}" "${input3}" "${input} ${input2} ${input3}"`;
+    const textInput = `"${input}" "${input2}" "${input3}"`;
 
-    // const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-    //   version: "2022-04-07",
-    //   authenticator: new IamAuthenticator({
-    //     apikey: "e5AVUgDFcpVm4bHGharvKxwz96kE6ndUFAmhSR43AmkQ",
-    //   }),
-    //   serviceUrl:
-    //     "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/0a56f75e-dbae-4b48-ae8b-24964b65ac89",
-    // });
+    console.log("getting response for: " + textInput);
 
-    const analyzeParams = {
-      text:
-        "" +
-        "to: " +
-        input +
-        " from: " +
-        yourName +
-        " " +
-        "to: " +
-        input +
-        " from: " +
-        yourName +
-        " " +
-        "to: " +
-        input +
-        " from: " +
-        yourName +
-        " " +
-        "to: " +
-        input +
-        " from: " +
-        yourName +
-        " ",
-      features: {
-        sentiment: {},
-      },
-    };
-
-    await axios
-      .post(
-        "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/0a56f75e-dbae-4b48-ae8b-24964b65ac89/v1/analyze?version=2022-04-07",
-        analyzeParams,
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
         {
-          auth: {
-            username: "apikey",
-            password: "e5AVUgDFcpVm4bHGharvKxwz96kE6ndUFAmhSR43AmkQ",
-          },
-        }
-      )
-      .then(function (response) {
-        console.log("Authenticated");
-        console.log(response);
-        if (response.data.sentiment.document.score < -0.5) {
-          getAltOpenAIResponse(input, yourName);
-        } else {
-          getOpenAIResponse(input, yourName);
-        }
-      })
-      .catch(function (error) {
-        console.log("Error on Authentication");
-      });
+          role: "user",
+          content:
+            "responding only with a percentage value and nothing else and no explanation, how controversial are these words: " +
+            textInput,
+        },
+      ],
+    });
+    const completionText = completion?.data?.choices[0].message?.content || "";
 
-    // naturalLanguageUnderstanding
-    //   .analyze(analyzeParams)
-    //   .then((analysisResults: any) => {
-    //     console.log(JSON.stringify(analysisResults, null, 2));
-    //   })
-    //   .catch((err: any) => {
-    //     console.log("error:", err);
-    //   });
+    if (completionText) {
+      const nums = completionText.match(/\d+/g);
+      const nums2 = nums && nums.length > 0 ? nums : [];
+      const reallyNumbers = nums2.map(Number);
+
+      console.log(
+        "BAD VIBES CHECK: " + textInput,
+        completionText,
+        reallyNumbers
+      );
+
+      let detected = false;
+      for (let x = 0; x < reallyNumbers.length; x++) {
+        if (reallyNumbers[x] > 60) {
+          detected = true;
+          break;
+        }
+      }
+
+      console.log("Detected bad vides", detected);
+
+      if (detected) {
+        getNoNegativityResponse(input, input2, input3);
+      } else {
+        getChatGPTResponse(input, input2, input3);
+      }
+    }
   };
 
   useEffect(() => {}, [input]);
@@ -165,17 +129,17 @@ const Excuse = () => {
   const handleBackClick = (e: any) => {
     setLoading(false);
     setBadVibes(false);
-    setYourName("");
     setInput("");
+    setInput2("");
+    setInput3("");
     setOutput("");
   };
 
   const handleButtonClick = (e: any) => {
     setLoading(true);
     setBadVibes(false);
-    getResponse(input, yourName);
+    checkForBadVibes(input, input2, input3);
   };
-  // input change
 
   const handleRelationshipChange = (e: any) => {
     setRelationship(e.target.value);
@@ -185,9 +149,14 @@ const Excuse = () => {
     setInput(e.target.value);
   };
 
-  const handleYourNameChange = (e: any) => {
+  const handleInput2Change = (e: any) => {
     setBadVibes(false);
-    setYourName(e.target.value);
+    setInput2(e.target.value);
+  };
+
+  const handleInput3Change = (e: any) => {
+    setBadVibes(false);
+    setInput3(e.target.value);
   };
 
   return (
@@ -211,7 +180,7 @@ const Excuse = () => {
             </h3>
           )}
 
-          <div>{output}</div>
+          <div dangerouslySetInnerHTML={{ __html: output }}></div>
           <div className="doneButtons">
             {!badVibes && <button onClick={handleCopyClick}>Copy</button>}
 
@@ -230,39 +199,42 @@ const Excuse = () => {
           />
           <h1>Need an excuse?</h1>
           <div>
-            We get it. Some things are just hard.
+            Did someone ask you to do something and you haven&apos;t finished it
+            yet?
             <br />
-            Try out our excuse maker upper. It works for anything anyone asks
-            you to do.
+            Try out our excuse maker. It works for anything anyone asks you to
+            do.
           </div>
           <br />
           <br />
           <div>
-            <label>WHO</label>
+            <label>Who</label>
             <input
               type="text"
               value={input}
               onChange={handleInputChange}
-              placeholder="Your colleague's name"
+              placeholder="Who asked you to do something?"
             />
           </div>
           <div>
-            <label>TASK </label>
+            <label>Task</label>
             <input
               type="text"
-              value={yourName}
-              onChange={handleYourNameChange}
+              value={input2}
+              onChange={handleInput2Change}
               placeholder="What did they ask you to do?"
             />
           </div>
-          {/* <div>
-            <label>Gender </label>
-            <select onChange={handleRelationshipChange} value={relationship}>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
-          </div> */}
+
+          <div>
+            <label>When</label>
+            <input
+              type="text"
+              value={input3}
+              onChange={handleInput3Change}
+              placeholder="When will you be done?"
+            />
+          </div>
 
           <br />
           <button onClick={handleButtonClick}>Generate</button>
@@ -276,4 +248,4 @@ const Excuse = () => {
   );
 };
 
-export default Excuse;
+export default CoverLetter;

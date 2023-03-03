@@ -21,7 +21,7 @@ const CoverLetter = () => {
   });
   const openai = new OpenAIApi(configuration);
 
-  const getAltOpenAIResponse = async (
+  const getNoNegativityResponse = async (
     input: string,
     input2: string,
     input3: string
@@ -46,32 +46,28 @@ const CoverLetter = () => {
     setLoading(false);
   };
 
-  const getOpenAIResponse = async (
+  const getChatGPTResponse = async (
     input: string,
     input2: string,
     input3: string
   ) => {
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt:
-        "In the super funny comedy Gen Z style, write an insanely funny and ironic cover letter I can attach to my job application for the role of " +
-        input2 +
-        ". Include in the cover letter that I have " +
-        input3 +
-        " years of experience. You must remember to keep it very funny and Gen Z. Please sign the cover letter with my name, " +
-        input,
-      temperature: 0.7,
-      max_tokens: 1055,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
+    const prompt = `In a super funny comedy Gen Z style, write an insanely funny and ironic cover letter I can attach to my job application for the role of ${input2}. Include in the cover letter that I have ${input3} years of experience. You must remember to keep it very funny and in the style of a Gen Z message. Also include a few jokes in the letter. Please sign the cover letter with my name, ${input}`;
+
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
     });
+    console.log("RESPONSE --------------", response.data.choices[0].message);
 
-    let outputFormatted = response.data.choices[0].text || "";
+    let outputFormatted = response.data.choices[0].message.content || "";
 
-    setOutput(outputFormatted);
+    setOutput(outputFormatted.replace(/(?:\r\n|\r|\n)/g, "<br>"));
 
-    console.log(response.data.choices[0].text);
     setLoading(false);
   };
 
@@ -80,15 +76,9 @@ const CoverLetter = () => {
     input2: string,
     input3: string
   ) => {
-    console.log("getting response for: " + input);
+    const textInput = `"${input}" "${input2}" "${input3}" "${input} ${input2} ${input3}"`;
 
-    const textInput = input + " " + input2 + " " + input3;
-    const analyzeParams = {
-      text: textInput.repeat(3),
-      features: {
-        sentiment: {},
-      },
-    };
+    console.log("getting response for: " + textInput);
 
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -101,7 +91,31 @@ const CoverLetter = () => {
         },
       ],
     });
-    console.log(completion.data.choices[0].message);
+    var reallyNumbers = completion.data.choices[0].message.content
+      .match(/\d+/g)
+      .map(Number);
+
+    console.log(
+      "BAD VIBES CHECK: " + textInput,
+      completion.data.choices[0].message.content,
+      reallyNumbers
+    );
+
+    let detected = false;
+    for (let x = 0; x < reallyNumbers.length; x++) {
+      if (reallyNumbers[x] > 60) {
+        detected = true;
+        break;
+      }
+    }
+
+    console.log("Detected bad vides", detected);
+
+    if (detected) {
+      getNoNegativityResponse(input, input2, input3);
+    } else {
+      getChatGPTResponse(input, input2, input3);
+    }
   };
 
   useEffect(() => {}, [input]);
@@ -164,7 +178,7 @@ const CoverLetter = () => {
             </h3>
           )}
 
-          <div>{output}</div>
+          <div dangerouslySetInnerHTML={{ __html: output }}></div>
           <div className="doneButtons">
             {!badVibes && <button onClick={handleCopyClick}>Copy</button>}
 

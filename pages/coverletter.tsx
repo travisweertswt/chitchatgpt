@@ -207,7 +207,8 @@ const CoverLetter = () => {
           <div>
             No problem.
             <br />
-            Pop in your details and we&apos;ll write the perfect cover letter.
+            Punch in your dream job and we&apos;ll write you the perfect cover
+            letter.
           </div>
           <br />
           <br />

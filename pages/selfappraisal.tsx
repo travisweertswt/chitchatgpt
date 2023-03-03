@@ -179,7 +179,7 @@ const SelfAppraisal = () => {
             </h3>
           )}
 
-          <div>{output}</div>
+          <div dangerouslySetInnerHTML={{ __html: output }}></div>
           <div className="doneButtons">
             {!badVibes && <button onClick={handleCopyClick}>Copy</button>}
 

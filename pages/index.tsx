@@ -49,7 +49,6 @@ const Home = () => {
         </Link>
 
         <div>
-          <h4>Extras</h4>
           <Link href="/excuse">
             <div className="linky" title="Excuse Maker">
               Excuse Maker

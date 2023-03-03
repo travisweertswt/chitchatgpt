@@ -48,26 +48,29 @@ const Home = () => {
           </div>
         </Link>
 
-        <Link href="/excuse">
-          <div className="linky" title="Excuse Maker">
-            Excuse Maker
-          </div>
-        </Link>
-        <Link href="/sickday">
-          <div className="linky" title="Sick Day">
-            Sick Day
-          </div>
-        </Link>
-        <Link href="/resignationletter">
-          <div className="linky" title="Resignation Letter">
-            Resignation Letter
-          </div>
-        </Link>
-        <Link href="/lovenote">
-          <div className="linky" title="Love Note">
-            Love Note
-          </div>
-        </Link>
+        <div>
+          <h4>Extras</h4>
+          <Link href="/excuse">
+            <div className="linky" title="Excuse Maker">
+              Excuse Maker
+            </div>
+          </Link>
+          <Link href="/sickday">
+            <div className="linky" title="Sick Day">
+              Sick Day
+            </div>
+          </Link>
+          <Link href="/resignationletter">
+            <div className="linky" title="Resignation Letter">
+              Resignation Letter
+            </div>
+          </Link>
+          <Link href="/lovenote">
+            <div className="linky" title="Love Note">
+              Love Note
+            </div>
+          </Link>
+        </div>
       </>
 
       <div className="poweredby">

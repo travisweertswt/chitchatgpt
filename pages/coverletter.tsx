@@ -62,12 +62,12 @@ const CoverLetter = () => {
         },
       ],
     });
-    response = response
-      ? response
-      : { data: { choices: [{ message: { content: "" } }] } };
+    // response = response
+    //   ? response
+    //   : { data: { choices: [{ message: { content: "" } }] } };
     //console.log("RESPONSE --------------", response.data.choices[0].message);
 
-    let outputFormatted = response?.data.choices[0].message.content || "";
+    let outputFormatted = response?.data?.choices[0].message?.content || "";
 
     setOutput(outputFormatted.replace(/(?:\r\n|\r|\n)/g, "<br>"));
 

@@ -21,7 +21,11 @@ const CoverLetter = () => {
   });
   const openai = new OpenAIApi(configuration);
 
-  const getAltOpenAIResponse = async (input: string, yourName: string) => {
+  const getAltOpenAIResponse = async (
+    input: string,
+    input2: string,
+    input3: string
+  ) => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt:
@@ -71,10 +75,14 @@ const CoverLetter = () => {
     setLoading(false);
   };
 
-  const getResponse = async (input: string, input2: string, input3: string) => {
+  const checkForBadVibes = async (
+    input: string,
+    input2: string,
+    input3: string
+  ) => {
     console.log("getting response for: " + input);
 
-    const textInput = "From: " + input + " To: " + input2 + " " + input3;
+    const textInput = input + " " + input2 + " " + input3;
     const analyzeParams = {
       text: textInput.repeat(3),
       features: {
@@ -82,29 +90,18 @@ const CoverLetter = () => {
       },
     };
 
-    await axios
-      .post(
-        "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/0a56f75e-dbae-4b48-ae8b-24964b65ac89/v1/analyze?version=2022-04-07",
-        analyzeParams,
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
         {
-          auth: {
-            username: "apikey",
-            password: "e5AVUgDFcpVm4bHGharvKxwz96kE6ndUFAmhSR43AmkQ",
-          },
-        }
-      )
-      .then(function (response) {
-        console.log("Authenticated");
-        console.log(response);
-        if (response.data.sentiment.document.score < -0.5) {
-          getAltOpenAIResponse(input, input2);
-        } else {
-          getOpenAIResponse(input, input2, input3);
-        }
-      })
-      .catch(function (error) {
-        console.log("Error on Authentication");
-      });
+          role: "user",
+          content:
+            "responding only with a percentage value and nothing else and no explanation, how controversial are these words: " +
+            textInput,
+        },
+      ],
+    });
+    console.log(completion.data.choices[0].message);
   };
 
   useEffect(() => {}, [input]);
@@ -125,7 +122,7 @@ const CoverLetter = () => {
   const handleButtonClick = (e: any) => {
     setLoading(true);
     setBadVibes(false);
-    getResponse(input, input2, input3);
+    checkForBadVibes(input, input2, input3);
   };
 
   const handleRelationshipChange = (e: any) => {

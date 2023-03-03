@@ -94,9 +94,8 @@ const CoverLetter = () => {
         },
       ],
     });
-    var reallyNumbers = completion.data.choices[0].message.content
-      .match(/\d+/g)
-      .map(Number);
+    let completionText = completion?.data?.choices[0].message?.content || "";
+    var reallyNumbers = completionText.match(/\d+/g).map(Number);
 
     console.log(
       "BAD VIBES CHECK: " + textInput,

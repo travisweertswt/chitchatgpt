@@ -29,7 +29,8 @@ const CoverLetter = () => {
   ) => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: `In the super funny comedy Gen Z style, write an insanely funny and ironic message I can send ${input2} (my boss) to say I won't be coming into work today because I woke up this morning and wasn't feeling well. Make sure the message is written in a Gen Z style and start it off by saying good morning, it's me ${input}, also make sure to include lots of jokes about taking a sick day`,
+      prompt:
+        "In a super cheeky Gen Z comedy style, write an positive upbeat response to the user about how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and look on the bright side instead.",
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,
@@ -51,7 +52,7 @@ const CoverLetter = () => {
     input2: string,
     input3: string
   ) => {
-    const prompt = `In a super funny comedy Gen Z style, write an insanely funny and ironic cover letter I can attach to my job application for the role of ${input2}. Include in the cover letter that I have ${input3} years of experience. You must remember to keep it very funny and in the style of a Gen Z message. Also include a few jokes in the letter. Please sign the cover letter with my name, ${input}`;
+    const prompt = `In the super funny comedy Gen Z style, write an insanely funny message I can send ${input2} (my boss) to say I won't be coming into work today because I woke up this morning and wasn't feeling well. Make sure the message is written in a Gen Z style and start it off by saying good morning, it's me ${input}, also make sure to include lots of jokes about taking a sick day`;
 
     let response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",

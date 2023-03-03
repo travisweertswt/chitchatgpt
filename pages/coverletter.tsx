@@ -95,6 +95,7 @@ const CoverLetter = () => {
       ],
     });
     let completionText = completion?.data?.choices[0].message?.content || "";
+    completionText = !completionText ? "" : completionText;
     var reallyNumbers = completionText.match(/\d+/g).map(Number);
 
     console.log(

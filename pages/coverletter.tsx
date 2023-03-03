@@ -103,7 +103,7 @@ const CoverLetter = () => {
 
       console.log(
         "BAD VIBES CHECK: " + textInput,
-        completion.data.choices[0].message.content,
+        completion?.data.choices[0].message.content,
         reallyNumbers
       );
 

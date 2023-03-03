@@ -15,6 +15,7 @@ const SelfAppraisal = () => {
   const [input2, setInput2] = useState("");
   const [input3, setInput3] = useState("");
   const [output, setOutput] = useState("");
+  const [outputRaw, setOutputRaw] = useState("");
 
   const configuration = new Configuration({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_KEY,
@@ -64,6 +65,7 @@ const SelfAppraisal = () => {
     });
 
     const outputFormatted = response?.data?.choices[0].message?.content || "";
+    setOutputRaw(outputFormatted);
     setOutput(outputFormatted.replace(/(?:\r\n|\r|\n)/g, "<br>"));
     setLoading(false);
   };
@@ -122,7 +124,7 @@ const SelfAppraisal = () => {
   useEffect(() => {}, [input]);
 
   const handleCopyClick = (e: any) => {
-    navigator.clipboard.writeText(output);
+    navigator.clipboard.writeText(outputRaw);
   };
 
   const handleBackClick = (e: any) => {

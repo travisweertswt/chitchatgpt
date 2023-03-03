@@ -196,6 +196,7 @@ const CoverLetter = () => {
             width="250"
           />
           <h1>Need an Cover Letter?</h1>
+
           <div>
             We get it. Some things are just hard.
             <br />

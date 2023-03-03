@@ -64,11 +64,11 @@ const Home = () => {
               Resignation Letter
             </div>
           </Link>
-          <Link href="/lovenote">
+          {/* <Link href="/lovenote">
             <div className="linky" title="Love Note">
               Love Note
             </div>
-          </Link>
+          </Link> */}
         </div>
       </>
 

@@ -29,7 +29,7 @@ const CoverLetter = () => {
     const response = await openai.createCompletion({
       model: "text-davinci-003",
       prompt:
-        "In a super cheeky Gen Z comedy style, write an insanely funny message back about how you know what they are up to, and how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and have a KitKat instead.",
+        "In a super cheeky Gen Z comedy style, write an positive upbeat response to the user about how they should consider being less negative and that there is enough negativity in the world and maybe they should give negativity a break and look on the bright side instead.",
       temperature: 0.7,
       max_tokens: 1055,
       top_p: 1,

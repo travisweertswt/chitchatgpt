@@ -37,7 +37,7 @@ const CoverLetter = () => {
       presence_penalty: 0,
     });
 
-    let outputFormatted = response.data.choices[0].text || "";
+    let outputFormatted = response?.data?.choices[0].text || "";
 
     setOutput(outputFormatted);
 
@@ -53,7 +53,7 @@ const CoverLetter = () => {
   ) => {
     const prompt = `In a super funny comedy Gen Z style, write an insanely funny and ironic cover letter I can attach to my job application for the role of ${input2}. Include in the cover letter that I have ${input3} years of experience. You must remember to keep it very funny and in the style of a Gen Z message. Also include a few jokes in the letter. Please sign the cover letter with my name, ${input}`;
 
-    const response = await openai.createChatCompletion({
+    let response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
         {
@@ -62,9 +62,12 @@ const CoverLetter = () => {
         },
       ],
     });
-    console.log("RESPONSE --------------", response.data.choices[0].message);
+    response = response
+      ? response
+      : { data: { choices: [{ message: { content: "" } }] } };
+    //console.log("RESPONSE --------------", response.data.choices[0].message);
 
-    let outputFormatted = response.data.choices[0].message.content || "";
+    let outputFormatted = response?.data.choices[0].message.content || "";
 
     setOutput(outputFormatted.replace(/(?:\r\n|\r|\n)/g, "<br>"));
 
